@@ -10,6 +10,10 @@ __pycache__/
 
 # 日志
 *.log
+_log.txt
+
+# 构建/调试临时输出
+_*.txt
 
 # WorkBuddy 部署标记
 *.genie
