@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBTI 人格卡牌 · 24 型</title>
+<style>
+  :root{
+    --bg:#0e0b1a; --ink:#f5f3ff; --mut:#a79fd6;
+    --n1:#ff2e88; --n2:#00e5ff; --n3:#ffe600; --n4:#7c4dff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:radial-gradient(1200px 600px at 10% -10%,#241844 0,transparent 60%),
+               radial-gradient(1000px 500px at 110% 10%,#3a1840 0,transparent 55%),
+               var(--bg);
+    color:var(--ink); font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    padding:32px 18px 60px; min-height:100vh;
+  }
+  header{text-align:center;margin-bottom:8px}
+  h1{font-size:clamp(26px,5vw,44px);letter-spacing:2px;
+     background:linear-gradient(90deg,var(--n1),var(--n3),var(--n2));
+     -webkit-background-clip:text;background-clip:text;color:transparent;
+     transform:rotate(-1deg)}
+  .sub{color:var(--mut);margin-top:6px;font-size:14px}
+  .legend{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 26px}
+  .legend span{font-size:12px;color:var(--mut);border:1px solid #3a2f5e;
+     padding:4px 10px;border-radius:999px}
+  .grid{display:grid;gap:18px;max-width:1180px;margin:0 auto;
+     grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+  .card{
+    position:relative;border-radius:18px;overflow:hidden;
+    background:linear-gradient(160deg,#1b1430,#241a40);
+    border:1px solid #352a55;box-shadow:0 10px 30px rgba(0,0,0,.45);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .card:nth-child(3n){transform:rotate(-1.2deg)}
+  .card:nth-child(3n+1){transform:rotate(1deg)}
+  .card:hover{transform:rotate(0) translateY(-6px) scale(1.03);
+     box-shadow:0 16px 40px rgba(255,46,136,.35)}
+  .art{position:relative;height:150px;display:flex;align-items:center;justify-content:center;
+     overflow:hidden}
+  .art .emoji{font-size:74px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4));
+     z-index:1;transition:transform .2s}
+  .card:hover .art .emoji{transform:scale(1.12) rotate(-4deg)}
+  .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+  .code{position:absolute;top:10px;left:10px;z-index:3;font-weight:800;font-size:13px;
+     background:rgba(0,0,0,.55);color:var(--n3);padding:3px 9px;border-radius:8px;
+     letter-spacing:1px;border:1px solid rgba(255,230,0,.4)}
+  .tag{position:absolute;top:10px;right:10px;z-index:3;font-size:11px;
+     background:rgba(0,229,255,.15);color:var(--n2);padding:3px 8px;border-radius:8px;
+     border:1px solid rgba(0,229,255,.4)}
+  .body{padding:14px 14px 18px}
+  .label{font-size:19px;font-weight:800;line-height:1.25;margin-bottom:8px}
+  .desc{font-size:13px;color:var(--mut);line-height:1.55}
+  /* 撞色渐变（抽象搞怪风） */
+  .g1{background:linear-gradient(135deg,var(--n1),#ff8a00)}
+  .g2{background:linear-gradient(135deg,var(--n2),#0066ff)}
+  .g3{background:linear-gradient(135deg,var(--n3),#ff2e88)}
+  .g4{background:linear-gradient(135deg,var(--n4),#00e5ff)}
+  .g5{background:linear-gradient(135deg,#ff2e88,#7c4dff)}
+  .g6{background:linear-gradient(135deg,#00e5ff,#7c4dff)}
+  footer{max-width:1180px;margin:34px auto 0;color:var(--mut);font-size:12.5px;
+     line-height:1.7;border-top:1px dashed #352a55;padding-top:16px}
+  footer b{color:var(--ink)}
+  code{background:#1b1430;border:1px solid #352a55;padding:1px 6px;border-radius:6px;color:var(--n3)}
+</style>
+</head>
+<body>
+  <header>
+    <h1>BBTI 人格卡牌 · 24 型</h1>
+    <div class="sub">抽象搞怪风 · 四维模型（E/I × S/N × T/F × A绷/B装/C刚）</div>
+    <div class="legend">
+      <span>具体人物梗</span><span>抽象原型</span>
+      <span>A=老绷家</span><span>B=装傻滑跪(待命名)</span><span>C=发疯硬刚</span>
+    </div>
+  </header>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    <b>关于图片：</b>当前每张卡用 emoji + 撞色渐变即时渲染（离线可见）。
+    要换真实图片，把图按代码命名放入 <code>cards/img/&lt;代码&gt;.jpg</code>
+    （如 <code>cards/img/ESTA.jpg</code>），刷新即自动替换。<br>
+    <b>网络图热链：</b>若你提供具体图片 URL，我可改为在卡牌里直接热链网页图片（浏览器打开时加载）。
+    注：本沙箱禁止出网下载，AI 出图此前已被你取消，故图片位暂以 emoji 占位。
+  </footer>
+
+<script>
+const PERSONAS = [
+  {code:"ESTA", label:"胆子肥嘟嘟的绷神", type:"具体人物", emoji:"🐷", g:"g3", desc:"表面绷得住，实则「我看你胆子真是肥嘟嘟的」式自信爆棚"},
+  {code:"ESTB", label:"显眼包",          type:"具体人物", emoji:"🌟", g:"g1", desc:"越被问越「啊？你说啥？」，还笑得最欢"},
+  {code:"ESTC", label:"奶龙",            type:"具体人物", emoji:"🐉", g:"g5", desc:"自信又沙雕，当场发疯全场记住你"},
+  {code:"ESFA", label:"糯糯",            type:"具体人物", emoji:"🍡", g:"g2", desc:"软糯热场一把手，自己绝不先笑场"},
+  {code:"ESFB", label:"搞笑女",          type:"具体人物", emoji:"🤪", g:"g3", desc:"用最尬的梗把冷场糊弄过去"},
+  {code:"ESFC", label:"护短发疯王",      type:"抽象原型", emoji:"🛡️", g:"g5", desc:"谁惹我朋友我直接刚"},
+  {code:"ENTA", label:"互联网嘴替",      type:"具体人物", emoji:"📢", g:"g2", desc:"替所有人说话，脑洞大表情平"},
+  {code:"ENTB", label:"菲比就比",        type:"具体人物", emoji:"🦄", g:"g6", desc:"替所有人说话但假装不懂，谜之自信"},
+  {code:"ENTC", label:"逻辑发疯怪",      type:"抽象原型", emoji:"🤯", g:"g4", desc:"用离谱逻辑把人怼到怀疑人生"},
+  {code:"ENFA", label:"淡淡的抽象人",    type:"抽象原型", emoji:"🫥", g:"g6", desc:"看啥都「哦」，内心已疯表面淡"},
+  {code:"ENFB", label:"咕咕嘎嘎",        type:"具体人物", emoji:"🐤", g:"g1", desc:"你发真心话，他回一串咕咕嘎嘎表情包"},
+  {code:"ENFC", label:"发疯文学本学",    type:"抽象原型", emoji:"📜", g:"g3", desc:"用发疯文学精准共情并反杀"},
+  {code:"ISTA", label:"蛰伏老绷家",      type:"抽象原型", emoji:"🐢", g:"g2", desc:"社恐但定力惊人，群里最稳"},
+  {code:"ISTB", label:"装死吗喽",        type:"具体人物", emoji:"🐒", g:"g4", desc:"已读不回，假装没看见麻烦"},
+  {code:"ISTC", label:"闷头硬刚鼠",      type:"抽象原型", emoji:"🐭", g:"g5", desc:"不说话但默默刚到底"},
+  {code:"ISFA", label:"卡皮巴拉",        type:"具体人物", emoji:"🦫", g:"g6", desc:"情绪稳定到可怕，天塌也绷着"},
+  {code:"ISFB", label:"糊弄学小鼠",      type:"抽象原型", emoji:"🤏", g:"g1", desc:"用「啊对对对」化解一切"},
+  {code:"ISFC", label:"护内闷葫芦",      type:"抽象原型", emoji:"🔥", g:"g3", desc:"平日不吭声，朋友被欺负直接炸"},
+  {code:"INTA", label:"谜语人老绷",      type:"具体人物", emoji:"🗿", g:"g4", desc:"说话全是梗，表情全无"},
+  {code:"INTB", label:"谜语人装傻",      type:"抽象原型", emoji:"❓", g:"g2", desc:"回消息像解密，其实装不懂"},
+  {code:"INTC", label:"阴间逻辑怪",      type:"抽象原型", emoji:"👻", g:"g5", desc:"用你听不懂的逻辑把你刚沉默"},
+  {code:"INFA", label:"淡人",            type:"具体人物", emoji:"🧊", g:"g6", desc:"精神状态领先但表面毫无波动"},
+  {code:"INFB", label:"鼠鼠我啊",        type:"具体人物", emoji:"🐭", g:"g1", desc:"自称鼠鼠，实则装傻躲事"},
+  {code:"INFC", label:"精神离职发疯",    type:"抽象原型", emoji:"💀", g:"g3", desc:"人还在，魂已发疯硬刚"},
+];
+
+const grid = document.getElementById('grid');
+PERSONAS.forEach(p=>{
+  const el = document.createElement('article');
+  el.className = 'card';
+  el.innerHTML = `
+    <div class="art ${p.g}">
+      <span class="code">${p.code}</span>
+      <span class="tag">${p.type}</span>
+      <span class="emoji">${p.emoji}</span>
+      <img src="img/${p.code}.jpg" alt="" onerror="this.remove()">
+    </div>
+    <div class="body">
+      <div class="label">${p.label}</div>
+      <div class="desc">${p.desc}</div>
+    </div>`;
+  grid.appendChild(el);
+});
+</script>
+</body>
+</html>

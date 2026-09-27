@@ -1,0 +1,4 @@
+data-uri count = 10
+card names = 老绷家, 奶龙, 糯糯, 菲比就比, 咕咕嘎嘎, 鼠鼠, 胆子肥嘟嘟, 牛来, 你已急哭, 邪修
+has __IMGS__ placeholder left = False
+has __DATA__ placeholder left = False

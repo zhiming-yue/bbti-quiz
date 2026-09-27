@@ -1,0 +1,15 @@
+﻿# 敏感信息：含真实飞书 app_secret，禁止公开提交
+app/feishu_config.json
+
+# 本地答卷数据备份
+app/submissions.jsonl
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 日志
+*.log
+
+# WorkBuddy 部署标记
+*.genie

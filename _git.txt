@@ -1,0 +1,29 @@
+﻿=== git version ===
+git version 2.55.0.windows.5
+=== git status ===
+git : fatal: not a git repository (or any of the parent directories): .git
+所在位置 行:445 字符: 233
++ ...  += "=== git status ==="; $lines += (git -C $root status 2>&1 | Out-S ...
++                                          ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (fatal: not a gi...ectories): .git 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+=== git remote -v ===
+git : fatal: not a git repository (or any of the parent directories): .git
+所在位置 行:445 字符: 319
++ ... == git remote -v ==="; $lines += (git -C $root remote -v 2>&1 | Out-S ...
++                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (fatal: not a gi...ectories): .git 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+=== git config user ===
+=== app dir listing ===
+__pycache__ | 1
+app.py | 7932
+feishu_config.json | 269
+index.html | 1271043
+接入指引.md | 2533
